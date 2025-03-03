@@ -1,0 +1,9 @@
+[
+  {
+    "objectID": "test_doc.html",
+    "href": "test_doc.html",
+    "title": "Test doc",
+    "section": "",
+    "text": "x &lt;- 1 + 2\n\n\nx\n\n[1] 3"
+  }
+]
