@@ -1,0 +1,15 @@
+---
+title: "Test doc"
+format: html
+---
+
+
+```{r}
+x <- 1 + 2
+```
+
+
+
+```{r}
+x
+```
