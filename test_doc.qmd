@@ -1,20 +1,21 @@
 ---
 title: "Test doc"
 format: html
+execute:
+  echo: false
 ---
 
 ```{r}
 library(rvest)
+library(httr2)
+library(tibble)
+library(knitr)
 ```
 
+
+## Today's Date:
 ```{r}
-x <- 1 + 6
-```
-
-
-
-```{r}
-x
+glue::glue("{Sys.Date()}")
 ```
 
 
@@ -26,8 +27,11 @@ turnaround_times <- rvest::read_html(
 turnaround_times_df <- turnaround_times |>
   rvest::html_elements("table") |>
   rvest::html_table()
+```
 
+## Relative Turnaround Times
 
+```{r}
 turnaround_times_df[[1]] |>
   knitr::kable()
 ```
@@ -56,7 +60,10 @@ holidays_df <- holiday_resp |>
 		simplifyVector = TRUE
 		) |> 
 	tibble::tibble()
+```
 
+## Public Holidays This Year
+```{r}
 holidays_df |> 
 	knitr::kable()
 ```
