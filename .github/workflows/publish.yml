@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [opened, reopened]
   schedule:
-    - cron: '0 5 * * *'
+    - cron: '30 16 * * *' # 4:30pm UTC ==> 5:30am NZDT/4:30am NZST
 
 name: Quarto Publish
 
