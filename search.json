@@ -4,6 +4,6 @@
     "href": "test_doc.html",
     "title": "Test doc",
     "section": "",
-    "text": "x &lt;- 1 + 5\n\n\nx\n\n[1] 6"
+    "text": "x &lt;- 1 + 6\n\n\nx\n\n[1] 7"
   }
 ]
