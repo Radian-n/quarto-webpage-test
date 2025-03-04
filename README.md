@@ -16,6 +16,8 @@ The due dates are calculated based on the current date, the current lab turnarou
 
 Each day at 4:30pm UTC (4:30am or 5:30am NZT depending on daylight savings), the webpage is rebuilt, and the new due dates are re-calcaulted.
 
+The web page is built using a Quarto document with R. The daily github action executes the R code and renders a new HTML page from the Quarto document. Then github deploys the HTML as a github page.
+
 ## Limitations
 
 ### Currently a work in progress
