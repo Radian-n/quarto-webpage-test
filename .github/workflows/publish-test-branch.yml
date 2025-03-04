@@ -33,7 +33,7 @@ jobs:
         run: quarto render index.qmd --to html
 
       - name: Rename Rendered File
-        run: mv index.html index_test.html # Create a 'test' version of the site.
+        run: mv docs/index.html docs/index_test.html # Create a 'test' version of the site.
 
       - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
