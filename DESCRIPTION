@@ -1,11 +1,10 @@
 Package: TBAWB-turnaround-times
-Title: What the Package Does (One Line, Title Case)
+Title: Creates a quarto web page of turnaround times for The Black and White Box photolab in Auckland.
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Matthew", "Kirk", , "mattkirka320@gmail.com", role = c("aut", "cre"))
+Description: This project creates a static web page that displays the turnaround times for various services provided by The Black and White Box photo lab in Auckland, NZ. The page is designed for staff (or anyone really) to be able to, at a glance, determine the expected due date of a specific service provided by the lab.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
