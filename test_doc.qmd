@@ -19,13 +19,44 @@ x
 
 
 ```{r}
-turnaround_times <- rvest::read_html("https://theblackandwhitebox.co.nz/turn-around-times/")
+turnaround_times <- rvest::read_html(
+  "https://theblackandwhitebox.co.nz/turn-around-times/"
+)
 
-turnaround_times_df <- turnaround_times |> 
-    rvest::html_elements("table") |> 
-    rvest::html_table()
+turnaround_times_df <- turnaround_times |>
+  rvest::html_elements("table") |>
+  rvest::html_table()
 
 
-turnaround_times_df[[1]] |> 
-    knitr::kable()
+turnaround_times_df[[1]] |>
+  knitr::kable()
+```
+
+
+
+```{r}
+HOLIDAYS_DOMAIN <- "https://api.public-holidays.nz/v1/"
+API_KEY <- keyring::key_get("NZ_HOLIDAYS_API_KEY")
+CURRENT_YEAR <- format(Sys.Date(), "%Y")
+
+holiday_req <- httr2::request(HOLIDAYS_DOMAIN) |>
+  httr2::req_url_path_append(
+		path = "year"
+	) |> 
+	httr2::req_url_query(
+		apikey = API_KEY,
+		year = CURRENT_YEAR
+	)
+
+holiday_resp <- holiday_req |> httr2::req_perform()
+
+holidays_df <- holiday_resp |> 
+	httr2::resp_body_json(
+		check_type = FALSE, # API response doesn't include a content type for some reason. Function fails because of this, so need to force it not to check for the content type.
+		simplifyVector = TRUE
+		) |> 
+	tibble::tibble()
+
+holidays_df |> 
+	knitr::kable()
 ```

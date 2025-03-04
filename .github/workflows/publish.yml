@@ -33,3 +33,4 @@ jobs:
           target: gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NZ_HOLIDAYS_API_KEY: ${{ secrets.NZ_HOLIDAYS_API_KEY }}
