@@ -26,10 +26,16 @@ jobs:
         with:
           cache-version: 1
 
-      - name: Render and Publish
+      - name: Render Quarto Document
+        run: quarto render index.qmd --to html
+
+      - name: Rename Rendered File
+        run: mv index.html index-test.html # Create a 'test' version of the site.
+
+      - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
-          target: gh-pages-test-branch
+          target: gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NZ_HOLIDAYS_API_KEY: ${{ secrets.NZ_HOLIDAYS_API_KEY }}
