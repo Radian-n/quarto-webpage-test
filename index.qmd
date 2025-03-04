@@ -41,20 +41,20 @@ turnaround_times_df[[1]] |>
 
 
 ```{r}
-API_KEY <- Sys.getenv("NZ_HOLIDAYS_API_KEY")
-HOLIDAYS_DOMAIN <- "https://api.public-holidays.nz/v1/"
-CURRENT_YEAR <- format(Sys.Date(), "%Y")
+# API_KEY <- Sys.getenv("NZ_HOLIDAYS_API_KEY")
+# HOLIDAYS_DOMAIN <- "https://api.public-holidays.nz/v1/"
+# CURRENT_YEAR <- format(Sys.Date(), "%Y")
 
-holiday_req <- httr2::request(HOLIDAYS_DOMAIN) |>
-  httr2::req_url_path_append(
-		path = "year"
-	) |> 
-	httr2::req_url_query(
-		apikey = API_KEY,
-		year = CURRENT_YEAR
-	)
+# holiday_req <- httr2::request(HOLIDAYS_DOMAIN) |>
+#   httr2::req_url_path_append(
+# 		path = "year"
+# 	) |> 
+# 	httr2::req_url_query(
+# 		apikey = API_KEY,
+# 		year = CURRENT_YEAR
+# 	)
 
-holiday_resp <- holiday_req |> httr2::req_perform()
+# holiday_resp <- holiday_req |> httr2::req_perform()
 
 holiday_resp
 # holidays_df <- holiday_resp |> 
