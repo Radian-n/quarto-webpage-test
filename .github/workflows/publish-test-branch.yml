@@ -1,6 +1,9 @@
 on:
   pull_request:
-    types: [opened, reopened]
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 name: Quarto Publish Test Branch
 
