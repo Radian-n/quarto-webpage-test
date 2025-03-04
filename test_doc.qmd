@@ -3,6 +3,9 @@ title: "Test doc"
 format: html
 ---
 
+```{r}
+library(rvest)
+```
 
 ```{r}
 x <- 1 + 6
@@ -12,4 +15,17 @@ x <- 1 + 6
 
 ```{r}
 x
+```
+
+
+```{r}
+turnaround_times <- rvest::read_html("https://theblackandwhitebox.co.nz/turn-around-times/")
+
+turnaround_times_df <- turnaround_times |> 
+    rvest::html_elements("table") |> 
+    rvest::html_table()
+
+
+turnaround_times_df[[1]] |> 
+    knitr::kable()
 ```
