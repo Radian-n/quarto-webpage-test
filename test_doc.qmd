@@ -35,8 +35,8 @@ turnaround_times_df[[1]] |>
 
 
 ```{r}
+API_KEY <- Sys.getenv("NZ_HOLIDAYS_API_KEY")
 HOLIDAYS_DOMAIN <- "https://api.public-holidays.nz/v1/"
-API_KEY <- keyring::key_get("NZ_HOLIDAYS_API_KEY")
 CURRENT_YEAR <- format(Sys.Date(), "%Y")
 
 holiday_req <- httr2::request(HOLIDAYS_DOMAIN) |>
