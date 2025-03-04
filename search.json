@@ -11,21 +11,21 @@
     "href": "index.html",
     "title": "Test doc",
     "section": "",
-    "text": "2025-03-04"
+    "text": "Attaching package: 'lubridate'\n\n\nThe following objects are masked from 'package:base':\n\n    date, intersect, setdiff, union"
   },
   {
     "objectID": "index.html#todays-date",
     "href": "index.html#todays-date",
     "title": "Test doc",
-    "section": "",
-    "text": "2025-03-04"
+    "section": "Today’s Date:",
+    "text": "Today’s Date:\n\n\n[1] \"2025-03-05 12:13:09 NZDT\""
   },
   {
     "objectID": "index.html#relative-turnaround-times",
     "href": "index.html#relative-turnaround-times",
     "title": "Test doc",
     "section": "Relative Turnaround Times",
-    "text": "Relative Turnaround Times\n\n\n\n\n\n\n\n\n\n\n\nService\nDevelop Only\nDev + Scan\nPrints Add On\n\n\n\n\nC-41\n2 Working Days\n5 Working Days\n+ 1 Working Days\n\n\nB&W\n3 Working Days\n5 Working Days\n+ 1 Working Days\n\n\nE-6\nProcessed Wednesday\nScans Sent Friday\n+ 1 Working Days\n\n\nECN-2\n10 Working Days\n12 Working Days\n+ 1 Working Days\n\n\nSouped Film\n10 Working Days\n12 Working Days\n+ 1 Working Days\n\n\nALT Formats (APS/110/126/127)\n5 Working Days\n6 Working Days\n+ 1 Working Days"
+    "text": "Relative Turnaround Times\n\n\n\n\n\n\n\n\n\n\n\nService\nDevelop Only\nDev + Scan\nPrints Add On\n\n\n\n\nC-41\n2 Working Days\n5 Working Days\n+ 1 Working Days\n\n\nB&W\n3 Working Days\n5 Working Days\n+ 1 Working Days\n\n\nE-6\nProcessed Wednesday\nScans Sent Friday\n+ 1 Working Days\n\n\nECN-2\n10 Working Days\n12 Working Days\n+ 1 Working Days\n\n\nSouped Film\n10 Working Days\n12 Working Days\n+ 1 Working Days\n\n\nALT Formats (APS/110/126/127)\n5 Working Days\n6 Working Days\n+ 1 Working Days\n\n\n\n\n\n\n\n&lt;httr2_response&gt;\n\n\nGET\nhttps://api.public-holidays.nz/v1/year?apikey=4c030b5fbeba457f89c3c285508a3a8b&year=2025\n\n\nStatus: 200 OK\n\n\nBody: In memory (7834 bytes)"
   },
   {
     "objectID": "index.html#public-holidays-this-year",

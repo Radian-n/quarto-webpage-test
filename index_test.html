@@ -114,7 +114,7 @@ Attaching package: 'lubridate'</code></pre>
 <h2 class="anchored" data-anchor-id="todays-date">Today’s Date:</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-03-05 12:13:09 NZDT"</code></pre>
+<pre><code>[1] "2025-03-05 12:13:02 NZDT"</code></pre>
 </div>
 </div>
 </section>
@@ -183,14 +183,13 @@ Attaching package: 'lubridate'</code></pre>
 <pre><code>&lt;httr2_response&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>GET
-https://api.public-holidays.nz/v1/year?apikey=4c030b5fbeba457f89c3c285508a3a8b&amp;year=2025</code></pre>
+<pre><code>GET https://api.public-holidays.nz/v1/year?apikey=&amp;year=2025</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Status: 200 OK</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Body: In memory (7834 bytes)</code></pre>
+<pre><code>Body: In memory (48 bytes)</code></pre>
 </div>
 </div>
 </section>
@@ -291,7 +290,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/Radian-n\.github\.io\/TBAWB-turnaround-times\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
