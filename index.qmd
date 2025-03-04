@@ -1,8 +1,9 @@
 ---
-title: "Test doc"
+title: "Turnaround Dates"
 format: html
 execute:
   echo: false
+  warning: false
 ---
 
 ```{r}
@@ -14,7 +15,7 @@ library(lubridate)
 ```
 
 
-## Today's Date:
+## Updated:
 ```{r}
 CURRENT_TIME <- lubridate::now(tzone = "Pacific/Auckland")
 CURRENT_TIME
@@ -56,17 +57,17 @@ holiday_req <- httr2::request(HOLIDAYS_DOMAIN) |>
 
 holiday_resp <- holiday_req |> httr2::req_perform()
 
-holiday_resp
-# holidays_df <- holiday_resp |> 
-# 	httr2::resp_body_json(
-# 		check_type = FALSE, # API response doesn't include a content type for some reason. Function fails because of this, so need to force it not to check for the content type.
-# 		simplifyVector = TRUE
-# 		) |> 
-# 	tibble::tibble()
+# holiday_resp
+holidays_df <- holiday_resp |> 
+	httr2::resp_body_json(
+		check_type = FALSE, # API response doesn't include a content type for some reason. Function fails because of this, so need to force it not to check for the content type.
+		simplifyVector = TRUE
+		) |> 
+	tibble::tibble()
 ```
 
 ## Public Holidays This Year
 ```{r}
-# holidays_df |> 
-# 	knitr::kable()
+holidays_df |> 
+	knitr::kable()
 ```
