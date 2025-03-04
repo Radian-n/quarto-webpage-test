@@ -1,8 +1,9 @@
 ---
-title: "Test doc"
+title: "Turnaround Dates"
 format: html
 execute:
   echo: false
+  warning: false
 ---
 
 ```{r}
@@ -10,12 +11,14 @@ library(rvest)
 library(httr2)
 library(tibble)
 library(knitr)
+library(lubridate)
 ```
 
 
-## Today's Date:
+## Updated:
 ```{r}
-glue::glue("{Sys.Date()}")
+CURRENT_TIME <- lubridate::now(tzone = "Pacific/Auckland")
+CURRENT_TIME
 ```
 
 
@@ -39,31 +42,32 @@ turnaround_times_df[[1]] |>
 
 
 ```{r}
-# API_KEY <- Sys.getenv("NZ_HOLIDAYS_API_KEY")
-# HOLIDAYS_DOMAIN <- "https://api.public-holidays.nz/v1/"
-# CURRENT_YEAR <- format(Sys.Date(), "%Y")
+API_KEY <- Sys.getenv("NZ_HOLIDAYS_API_KEY")
+HOLIDAYS_DOMAIN <- "https://api.public-holidays.nz/v1/"
+CURRENT_YEAR <- format(Sys.Date(), "%Y")
 
-# holiday_req <- httr2::request(HOLIDAYS_DOMAIN) |>
-#   httr2::req_url_path_append(
-# 		path = "year"
-# 	) |> 
-# 	httr2::req_url_query(
-# 		apikey = API_KEY,
-# 		year = CURRENT_YEAR
-# 	)
+holiday_req <- httr2::request(HOLIDAYS_DOMAIN) |>
+  httr2::req_url_path_append(
+		path = "year"
+	) |> 
+	httr2::req_url_query(
+		apikey = API_KEY,
+		year = CURRENT_YEAR
+	)
 
-# holiday_resp <- holiday_req |> httr2::req_perform()
+holiday_resp <- holiday_req |> httr2::req_perform()
 
-# holidays_df <- holiday_resp |> 
-# 	httr2::resp_body_json(
-# 		check_type = FALSE, # API response doesn't include a content type for some reason. Function fails because of this, so need to force it not to check for the content type.
-# 		simplifyVector = TRUE
-# 		) |> 
-# 	tibble::tibble()
+# holiday_resp
+holidays_df <- holiday_resp |> 
+	httr2::resp_body_json(
+		check_type = FALSE, # API response doesn't include a content type for some reason. Function fails because of this, so need to force it not to check for the content type.
+		simplifyVector = TRUE
+		) |> 
+	tibble::tibble()
 ```
 
 ## Public Holidays This Year
 ```{r}
-# holidays_df |> 
-# 	knitr::kable()
+holidays_df |> 
+	knitr::kable()
 ```
