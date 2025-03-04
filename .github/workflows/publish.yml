@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [opened, reopened]
   schedule:
-    - cron: '0 15 * * *'
+    - cron: '0 5 * * *'
 
 name: Quarto Publish
 
