@@ -134,12 +134,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>turnaround_times <span class="ot">&lt;-</span> rvest<span class="sc">::</span><span class="fu">read_html</span>(<span class="st">"https://theblackandwhitebox.co.nz/turn-around-times/"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>turnaround_times_df <span class="ot">&lt;-</span> turnaround_times <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    rvest<span class="sc">::</span><span class="fu">html_elements</span>(<span class="st">"table"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    rvest<span class="sc">::</span><span class="fu">html_table</span>()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>turnaround_times_df[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 23%">
+<col style="width: 21%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Service</th>
+<th style="text-align: left;">Develop Only</th>
+<th style="text-align: left;">Dev + Scan</th>
+<th style="text-align: left;">Prints Add On</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">C-41</td>
+<td style="text-align: left;">2 Working Days</td>
+<td style="text-align: left;">5 Working Days</td>
+<td style="text-align: left;">+ 1 Working Days</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B&amp;W</td>
+<td style="text-align: left;">3 Working Days</td>
+<td style="text-align: left;">5 Working Days</td>
+<td style="text-align: left;">+ 1 Working Days</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">E-6</td>
+<td style="text-align: left;">Processed Wednesday</td>
+<td style="text-align: left;">Scans Sent Friday</td>
+<td style="text-align: left;">+ 1 Working Days</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ECN-2</td>
+<td style="text-align: left;">10 Working Days</td>
+<td style="text-align: left;">12 Working Days</td>
+<td style="text-align: left;">+ 1 Working Days</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Souped Film</td>
+<td style="text-align: left;">10 Working Days</td>
+<td style="text-align: left;">12 Working Days</td>
+<td style="text-align: left;">+ 1 Working Days</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ALT Formats (APS/110/126/127)</td>
+<td style="text-align: left;">5 Working Days</td>
+<td style="text-align: left;">6 Working Days</td>
+<td style="text-align: left;">+ 1 Working Days</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 

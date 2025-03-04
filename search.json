@@ -4,6 +4,6 @@
     "href": "test_doc.html",
     "title": "Test doc",
     "section": "",
-    "text": "x &lt;- 1 + 6\n\n\nx\n\n[1] 7"
+    "text": "library(rvest)\n\n\nx &lt;- 1 + 6\n\n\nx\n\n[1] 7\n\n\n\nturnaround_times &lt;- rvest::read_html(\"https://theblackandwhitebox.co.nz/turn-around-times/\")\n\nturnaround_times_df &lt;- turnaround_times |&gt; \n    rvest::html_elements(\"table\") |&gt; \n    rvest::html_table()\n\n\nturnaround_times_df[[1]] |&gt; \n    knitr::kable()\n\n\n\n\n\n\n\n\n\n\nService\nDevelop Only\nDev + Scan\nPrints Add On\n\n\n\n\nC-41\n2 Working Days\n5 Working Days\n+ 1 Working Days\n\n\nB&W\n3 Working Days\n5 Working Days\n+ 1 Working Days\n\n\nE-6\nProcessed Wednesday\nScans Sent Friday\n+ 1 Working Days\n\n\nECN-2\n10 Working Days\n12 Working Days\n+ 1 Working Days\n\n\nSouped Film\n10 Working Days\n12 Working Days\n+ 1 Working Days\n\n\nALT Formats (APS/110/126/127)\n5 Working Days\n6 Working Days\n+ 1 Working Days"
   }
 ]
