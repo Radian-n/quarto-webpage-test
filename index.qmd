@@ -10,64 +10,132 @@ execute:
 library(rvest)
 library(httr2)
 library(tibble)
+library(dplyr)
+library(purrr)
 library(knitr)
 library(lubridate)
-```
+library(bizdays)
 
-
-## Updated:
-```{r}
-CURRENT_TIME <- lubridate::now(tzone = "Pacific/Auckland")
-CURRENT_TIME
+devtools::load_all()
 ```
 
 
 ```{r}
+#| label: get-current-time
+
+CURRENT_DATETIME <- lubridate::now(tzone = "Pacific/Auckland")
+CURRENT_DATE <- lubridate::today(tzone = "Pacific/Auckland")
+```
+
+
+
+```{r}
+#| label: scrape-turnaround-time-webpage
+
+# Scrape turnaround times page
 turnaround_times <- rvest::read_html(
   "https://theblackandwhitebox.co.nz/turn-around-times/"
 )
 
+# Extract turnaround times tables (film lab, printing)
 turnaround_times_df <- turnaround_times |>
   rvest::html_elements("table") |>
   rvest::html_table()
+
+# Get individual dataframes
+film_turnaround_df <- turnaround_times_df[[1]]
+print_turnaround_df <- turnaround_times_df[[2]]
 ```
 
-## Relative Turnaround Times
 
 ```{r}
+#| label: access-nz-holidays-api
+
+# NZ_HOLIDAYS_API_KEY comes from system environment:
+#  - Local development: .Renviron
+#  - Production: github secret
+API_KEY <- Sys.getenv("NZ_HOLIDAYS_API_KEY")
+
+# Generate request
+holiday_req <- httr2::request("https://api.public-holidays.nz/v1/") |>
+  httr2::req_url_path_append(
+    path = "year"
+  ) |>
+  httr2::req_url_query(
+    apikey = API_KEY,
+    year = lubridate::year(CURRENT_DATETIME)
+  )
+
+# Perform request
+holiday_resp <- holiday_req |> httr2::req_perform()
+
+# Process response into dataframe
+holidays_df <- holiday_resp |>
+  httr2::resp_body_json(
+    check_type = FALSE, # API response doesn't include a content type for some reason. Function fails because of this, so need to tell function not to check for the content type.
+    simplifyVector = TRUE
+  ) |>
+  tibble::tibble()
+
+# Select only National and Auckland public holidays
+holiday_dates_df <- holidays_df |>
+  dplyr::filter(
+    (stringr::str_detect(HolidayName, "Auckland")) |
+      (Type == "National")
+  ) |>
+  dplyr::select(HolidayName, ActualDate, ObservedDate) |> # Use Observed date for calculations
+  dplyr::mutate(ObservedDate = lubridate::dmy(ObservedDate)) # Convert string to datetime object
+```
+
+
+
+```{r}
+# Set up 'business calendar' for 'work day' calculations.
+# This is used to account for weekends and public holidays when calculating due dates
+bawb_biz_calendar <- bizdays::create.calendar(
+  "bawb_calendar",
+  weekdays = c("saturday", "sunday"),
+  holidays = holiday_dates_df$ObservedDate
+)
+
+# Convert turnaround days into turnaround dates row at a time
+film_turnaround_dates_df <- film_turnaround_df %>%
+  purrr::pmap(.f = process_row_strings_into_days) |>
+  purrr::list_rbind() |> 
+  purrr::pmap(.f = process_row_days_into_dates) |>
+  purrr::list_rbind()
+```
+
+
+```{r}
+film_turnaround_dates_df |>
+  # Format dates into day-month-year
+  dplyr::mutate(across(where(is.Date), ~ format(.x, "%d-%m-%Y"))) |>
+  knitr::kable()
+```
+
+_As of **`r format(CURRENT_DATETIME, "%A %d %B %Y")`** at `r format(CURRENT_DATETIME, "%H:%M%p")`_
+
+-------
+
+#### Website Turnaround Times
+```{r}
+#| label: display-website-turnaround-days
+
 turnaround_times_df[[1]] |>
   knitr::kable()
 ```
 
+[Source](https://theblackandwhitebox.co.nz/turn-around-times/)
 
 
+#### Upcoming Public Holidays
 ```{r}
-API_KEY <- Sys.getenv("NZ_HOLIDAYS_API_KEY")
-HOLIDAYS_DOMAIN <- "https://api.public-holidays.nz/v1/"
-CURRENT_YEAR <- format(Sys.Date(), "%Y")
+#| label: display-upcoming-holidays
 
-holiday_req <- httr2::request(HOLIDAYS_DOMAIN) |>
-  httr2::req_url_path_append(
-		path = "year"
-	) |> 
-	httr2::req_url_query(
-		apikey = API_KEY,
-		year = CURRENT_YEAR
-	)
-
-holiday_resp <- holiday_req |> httr2::req_perform()
-
-# holiday_resp
-holidays_df <- holiday_resp |> 
-	httr2::resp_body_json(
-		check_type = FALSE, # API response doesn't include a content type for some reason. Function fails because of this, so need to force it not to check for the content type.
-		simplifyVector = TRUE
-		) |> 
-	tibble::tibble()
+holiday_dates_df |>
+  dplyr::filter(ObservedDate > CURRENT_DATE) |>
+  knitr::kable()
 ```
 
-## Public Holidays This Year
-```{r}
-holidays_df |> 
-	knitr::kable()
-```
+[Source](https://www.public-holidays.nz/)
